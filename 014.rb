@@ -10,7 +10,8 @@
 
     13 → 40 → 20 → 10 → 5 → 16 → 8 → 4 → 2 → 1
 
-  It can be seen that this sequence (starting at 13 and finishing at 1) contains 10 terms. Although it has not been proved yet (Collatz Problem), it is thought that all starting numbers finish at 1.
+  It can be seen that this sequence (starting at 13 and finishing at 1) contains 10 terms.
+  Although it has not been proved yet (Collatz Problem), it is thought that all starting numbers finish at 1.
 
   Which starting number, under one million, produces the longest chain?
 
@@ -21,24 +22,35 @@ class Fixnum
   def even?
     self % 2 == 0
   end
+
+  def odd?
+    !even?
+  end
 end
 
-chains = []
-current = 1
-# while curren < 1_000_000
-5E5.to_i.upto(1E6.to_i) do |n|
+memoiz = Hash[1, 1]
+
+1.upto(1_000_000) do |n|
   current = n
   chain = 0
-  while current < 1_000_000
-    if [2,6,0].include?(current % 10)
-      current /= 2
+  loop do
+    if memoiz[current]
+      memoiz[n] = memoiz[current] + chain
+      break
     else
-      current = 3 * current + 1
+      if current.odd?
+        current = (current * 3 + 1)
+      else
+        current /= 2
+      end
+      chain += 1
     end
-    chain += 1
   end
-  chains << chain
-  p chain
+
+  print "|#{'=' * (n / 100_000 )}>|\r"
 end
 
-puts "A. #{chains.max}"
+ans = memoiz.values.max
+
+puts
+puts "A. #{ans}"

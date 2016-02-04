@@ -1,3 +1,3 @@
 [Project Euler](https://projecteuler.net)
 
-[Me](https://projecteuler.net/progress=rentalname)
+[![](https://projecteuler.net/profile/rentalname.png)](https://projecteuler.net/progress=rentalname)
